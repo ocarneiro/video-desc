@@ -4,7 +4,12 @@ def getLength(filename):
   result = subprocess.Popen(["ffprobe", filename],stdout = subprocess.PIPE, stderr = subprocess.STDOUT).communicate()[0].decode('UTF-8')
   for resultline in result.rsplit(sep="\n"):  #quebra o resultado em linhas
         if 'Duration' in resultline:
-            print (resultline)
+            print (resultline) # Duration: 00:01:26.89, start: 0.000000, bitrate: 11975 kb/s
+            words = resultline.rsplit(sep=",", maxsplit=2)
+            wcount = 0
+            for word in words:
+                print (wcount, " = ", word)
+                wcount += 1
 
 print ("Lendo diretório: ", os.getcwd())
 for filename in os.listdir():
