@@ -1,5 +1,7 @@
 #! /usr/bin/env python3
 import os, subprocess
+import sys
+import magic
 
 def getLength(filename):
   result = subprocess.Popen(["ffprobe", filename],stdout = subprocess.PIPE, stderr = subprocess.STDOUT).communicate()[0].decode('UTF-8')
@@ -18,12 +20,27 @@ def getLength(filename):
             #    print (wcount, " = ", word)
             #    wcount += 1
 
-print ("Lendo diretório: ", os.getcwd())
-for filename in os.listdir():
-    #print (" -- Lendo arquivo: ", filename)
-    ext = filename[-3:] #extensão do arquivo
-    if ext == 'MOV' or ext == 'MP4': #se for um vídeo...
+def getFileInfo(filename):
+    type_media, ext = getFileType(filename)
+    if type_media == "video": #se for um vídeo...
         getLength(filename)
+    else:
+        print("Arquivo: " + filename + " não é um vídeo.")
 
+def getFileType(filename):
+    f = magic.Magic(mime=True)
+    ftype = str(f.from_file(filename), 'UTF-8')
+    print(ftype)
+    return ftype.split("/")
 
+if __name__ == "__main__":
+    if len(sys.argv) > 1:
+        filename = sys.argv[1]
+        print ("Lendo arquivo: ", filename)
+        getFileInfo(filename)
+    else:
+        print ("Lendo diretório: ", os.getcwd())
+        for filename in os.listdir():
+            if os.path.isfile(filename):
+                getFileInfo(filename)
 
