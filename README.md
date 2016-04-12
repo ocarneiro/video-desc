@@ -6,6 +6,7 @@ Este programa utiliza Python 3, [Python-Magic](https://github.com/ahupp/python-m
 Para obter o FFmpeg utilize as instruções contidas em: http://ffmpeg.org/download.html
 
 Exemplo de saída do script:
+
     Lendo diretório:  /home/otavio/Vídeos/2016/2016_02_08-Printrbot44
     video/quicktime
     f3067274_ftyp.mov - 00h20m00.10s
